@@ -1,0 +1,29 @@
+# Dependencies
+/vendor/
+composer.lock
+
+# GeoIP Database
+GeoLite2-Country.mmdb
+
+# Cache files
+/cache/
+/logs/
+geoip_*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# PHP
+*.php~
+.php_cs
+.php_cs.cache
+
+# Environment
+.env
+.env.local
+.env.*.local

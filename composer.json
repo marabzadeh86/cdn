@@ -1,0 +1,24 @@
+{
+    "name": "marabzadeh86/cdn",
+    "description": "An intelligent path selector for file downloads with geographic routing",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "marabzadeh86",
+            "email": "contact@example.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "maxmind/maxminddb-reader": "^1.11"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0 || ^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "GeoRedirector\\": "src/"
+        }
+    }
+}
