@@ -11,8 +11,8 @@ try {
     class GeoRedirector {
         private $dbPath;
         private $cacheDir;
-        private $serverConfig;
         private $defaultServer;
+        private $iranServer;
         
         public function __construct($dbPath, $cacheDir = null) {
             $this->dbPath = $dbPath;
@@ -29,15 +29,8 @@ try {
             }
             
             // Server configuration
-            $this->serverConfig = [
-                'US' => 'https://us-server.example.com',
-                'CA' => 'https://us-server.example.com',
-                'GB' => 'https://eu-server.example.com',
-                'DE' => 'https://eu-server.example.com',
-                'FR' => 'https://eu-server.example.com',
-            ];
-            
-            $this->defaultServer = 'https://eu-server.example.com';
+            $this->defaultServer = 'https://cdn.digiboy.ir';
+            $this->iranServer = 'https://fdn.digiboy.ir';
         }
         
         public function getClientIP() {
@@ -61,7 +54,8 @@ try {
             }
             
             if (!file_exists($this->dbPath)) {
-                throw new Exception("Database file not found: " . $this->dbPath);
+                error_log("Database file not found: " . $this->dbPath);
+                return null; // Return null instead of throwing error
             }
             
             try {
@@ -77,7 +71,7 @@ try {
                 return $country;
             } catch (Exception $e) {
                 error_log("GeoIP Error: " . $e->getMessage());
-                throw new Exception("GeoIP lookup failed: " . $e->getMessage());
+                return null; // Return null instead of throwing error
             }
         }
         
@@ -95,7 +89,9 @@ try {
             }
             
             // Get server based on country
-            $baseServer = $this->serverConfig[$country] ?? $this->defaultServer;
+            // If Iran, use Iran server; otherwise use default server
+            // If country cannot be determined, use default server
+            $baseServer = ($country === 'IR') ? $this->iranServer : $this->defaultServer;
             $redirectUrl = $baseServer . '/' . ltrim($filename, '/');
             
             // Preserve query string
