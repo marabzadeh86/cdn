@@ -1,11 +1,12 @@
 <?php
 
+use MaxMind\Db\Reader;
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 try {
     require_once 'vendor/autoload.php';
-    use MaxMind\Db\Reader;
     
     class GeoRedirector {
         private $dbPath;
